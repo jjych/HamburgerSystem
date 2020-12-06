@@ -1,6 +1,7 @@
 package com.java.ex;
 
 import com.java.ex.*;
+import com.java.ex.DB.*;
 import com.java.ex.Event.*;
 import com.java.ex.main.MainClass;
 
@@ -13,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,6 +24,8 @@ public class ThirdWindow extends JFrame{
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	ResultSetMetaData rsmd = null; // resultset 에 대한 컬럼의 속성이나 타입 정보를 사용한다.
+//	Ingredient2 stock =null;
+//	Ingredient I = null;
 	
 	public static Connection getIngre() {                // 재료 DB연동
 		try {
@@ -37,6 +41,25 @@ public class ThirdWindow extends JFrame{
 			return null;
 		}
 		
+	}
+	public static String[][] getJumun(){                  // 주문DB 불러오기
+		try {
+			Connection con = getIngre();
+			PreparedStatement statement = con.prepareStatement("Select * From jumun");
+			ResultSet results = statement.executeQuery();
+			ArrayList<String[]> list = new ArrayList<String[]>();
+			while(results.next()) {
+				list.add(new String[]{
+					results.getString("JumunName")
+				});
+			}
+			String[][] arr = new String[list.size()][3];
+			return list.toArray(arr);
+			}catch(Exception e) {
+				System.out.println(e.getMessage());
+				return null;
+		   }
+			
 	}
 	
 	public void con2() {                       // food DB연동
@@ -55,8 +78,36 @@ public class ThirdWindow extends JFrame{
 		}
 	}
 	
+//	public int checkOrder(){
+//		int result=0;
+//		if(	stock.getBread() == -1 || 
+//			stock.getBulgogi() == -1 || 
+//			stock.getYangsangchu() == -1 ||
+//			stock.getPicle() == -1 ||
+//			stock.getSoce() == -1 ||
+//			stock.getGamja() == -1 ||
+//			stock.getYangpa() == -1 ||
+//			stock.getChiken() == -1 ||
+//			stock.getOjing() == -1 ||
+//		    stock.getEgg() == -1 ||
+//		    stock.getBaken() == -1 ||
+//		    stock.getSicyounyu() == -1 ||
+//		    stock.getCheeze() == -1 ||
+//		    stock.getMilk() == -1 ||
+//		    stock.getSider() == -1 ||
+//		    stock.getCola() == -1 ||
+//		    stock.getIce() == -1 
+//		){
+//			result=-1;	
+//		}	
+//			return result;
+//	}//checkOrder
+	
 	public ThirdWindow() {
 		con2();
+//		I = new Ingredient();
+//		stock = new Ingredient2();
+//		stock = I.getstock();	//서버에서 재고 데이터 넣어주기
 		Container ct = getContentPane();
 		setTitle("주방");
 		setSize(800,600);
@@ -77,7 +128,11 @@ public class ThirdWindow extends JFrame{
 		jlist.setBounds(50,5,100,20);
 		jp1.add(jlist);
 		
-		JTable list = new JTable();                           // 주문내역리스트 추가
+		String[][] dataJaro = ThirdWindow.getJumun();            // DB연동된 테이블
+		String[] ColName3 = new String[] {"주문메뉴"};
+		DefaultTableModel model3 = new DefaultTableModel(dataJaro,ColName3);
+		JTable list = new JTable(model3);                      // 주문내역리스트 추가
+		list.setFont(new Font("Sanserif", Font.BOLD,12));
 		list.setBounds(1,30,150,150);
 		jp1.add(list);
 		
@@ -85,6 +140,7 @@ public class ThirdWindow extends JFrame{
 		String [][] Data = null;
 		DefaultTableModel model = new DefaultTableModel(Data,ColName);
 		JTable listResult = new JTable(model);                  // 만드는 리스트
+		listResult.setFont(new Font("Sanserif", Font.BOLD,12));
 		listResult.setBounds(400,320,230,220);
 		jp1.add(listResult);
 		
@@ -153,6 +209,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb1.setText(rs.getString(3));
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -205,6 +264,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb2.setText(rs.getString(3));
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -257,6 +319,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb3.setText(rs.getString(3));
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -309,6 +374,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb4.setText(rs.getString(3));
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -361,6 +429,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb5.setText(rs.getString(3));
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -413,6 +484,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb6.setText(rs.getString(3));	
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -465,6 +539,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb7.setText(rs.getString(3));	
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -517,6 +594,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb8.setText(rs.getString(3));
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -569,6 +649,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb9.setText(rs.getString(3));	
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -621,6 +704,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb10.setText(rs.getString(3));
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -673,6 +759,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb11.setText(rs.getString(3));	
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -725,6 +814,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb12.setText(rs.getString(3));
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -777,6 +869,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb13.setText(rs.getString(3));
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -829,6 +924,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb14.setText(rs.getString(3));
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -881,6 +979,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb15.setText(rs.getString(3));
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -933,6 +1034,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb16.setText(rs.getString(3));	
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -985,6 +1089,9 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb17.setText(rs.getString(3));	
+						if(rs.getInt(3) <= 0 ) {
+							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
 					}
 				
 				} catch (Exception e2) {
@@ -1005,7 +1112,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				
 				m.setRowCount(0);
 				text.setBounds(690,410,120,50);
 				text.setText(String.valueOf("제조중"));
@@ -1020,6 +1126,8 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int rowCont = listResult.getRowCount();
+				text.setBounds(660,410,120,50);
+				text.setText(String.valueOf("잘못만들었어요."));
 				for(int i=0;i<rowCont;i++) {
 					if((String)listResult.getValueAt(i, 0) == "참깨빵" && (String)listResult.getValueAt(i+1, 0) == "불고기패티" && (String)listResult.getValueAt(i+2, 0) == "양상추" && (String)listResult.getValueAt(i+3, 0) == "특별한소스") {
 						text.setBounds(660,410,120,50);
@@ -1037,6 +1145,29 @@ public class ThirdWindow extends JFrame{
 							PreparedStatement statement = con.prepareStatement("Update food set SellCount = SellCount + 1 where SellFood = '불고기버거'");  // 불고기버거 완성시 판매량 1증가
 							ResultSet results = statement.executeQuery();
 						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						try {
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("delete from jumun where JumunName = '불고기버거'");
+							ResultSet results = statement.executeQuery();
+						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						DefaultTableModel m = (DefaultTableModel)listResult.getModel();            // 재료기록칸 목록 초기화
+						m.setRowCount(0);
+						DefaultTableModel s = (DefaultTableModel)list.getModel();                  // 주문내역 목록 초기화
+						s.setRowCount(0);
+						try {                                                                                      // 다시 입력받음
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("Select * From jumun");
+							ResultSet results = statement.executeQuery();
+							ArrayList<String[]> list = new ArrayList<String[]>();
+							while(results.next()) {
+								model3.addRow(new Object[] {results.getString("JumunName")});
+							}
 							}catch(Exception e1) {
 								System.out.println(e1.getMessage());
 						   }
@@ -1060,6 +1191,29 @@ public class ThirdWindow extends JFrame{
 							}catch(Exception e1) {
 								System.out.println(e1.getMessage());
 						   }
+						try {
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("delete from jumun where JumunName = '치즈버거'");
+							ResultSet results = statement.executeQuery();
+						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						DefaultTableModel m = (DefaultTableModel)listResult.getModel();            // 재료기록칸 목록 초기화
+						m.setRowCount(0);
+						DefaultTableModel s = (DefaultTableModel)list.getModel();                  // 주문내역 목록 초기화
+						s.setRowCount(0);
+						try {                                                                                      // 다시 입력받음
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("Select * From jumun");
+							ResultSet results = statement.executeQuery();
+							ArrayList<String[]> list = new ArrayList<String[]>();
+							while(results.next()) {
+								model3.addRow(new Object[] {results.getString("JumunName")});
+							}
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
 					}
 					else if((String)listResult.getValueAt(i, 0) == "참깨빵" && (String)listResult.getValueAt(i+1, 0) == "불고기패티" && (String)listResult.getValueAt(i+2, 0) == "불고기패티" && (String)listResult.getValueAt(i+3, 0) == "양상추" && (String)listResult.getValueAt(i+4, 0) == "양파" && (String)listResult.getValueAt(i+5, 0) == "피클" && (String)listResult.getValueAt(i+6, 0) == "특별한소스") {
 						text.setBounds(680,410,120,50);
@@ -1077,6 +1231,29 @@ public class ThirdWindow extends JFrame{
 							PreparedStatement statement = con.prepareStatement("Update food set SellCount = SellCount + 1 where SellFood = '빅맥'");  // 빅맥 완성시 판매량 1증가
 							ResultSet results = statement.executeQuery();
 						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						try {
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("delete from jumun where JumunName = '빅맥'");
+							ResultSet results = statement.executeQuery();
+						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						DefaultTableModel m = (DefaultTableModel)listResult.getModel();            // 재료기록칸 목록 초기화
+						m.setRowCount(0);
+						DefaultTableModel s = (DefaultTableModel)list.getModel();                  // 주문내역 목록 초기화
+						s.setRowCount(0);
+						try {                                                                                      // 다시 입력받음
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("Select * From jumun");
+							ResultSet results = statement.executeQuery();
+							ArrayList<String[]> list = new ArrayList<String[]>();
+							while(results.next()) {
+								model3.addRow(new Object[] {results.getString("JumunName")});
+							}
 							}catch(Exception e1) {
 								System.out.println(e1.getMessage());
 						   }
@@ -1100,6 +1277,29 @@ public class ThirdWindow extends JFrame{
 							}catch(Exception e1) {
 								System.out.println(e1.getMessage());
 						   }
+						try {
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("delete from jumun where JumunName = '크리스피버거'");
+							ResultSet results = statement.executeQuery();
+						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						DefaultTableModel m = (DefaultTableModel)listResult.getModel();            // 재료기록칸 목록 초기화
+						m.setRowCount(0);
+						DefaultTableModel s = (DefaultTableModel)list.getModel();                  // 주문내역 목록 초기화
+						s.setRowCount(0);
+						try {                                                                                      // 다시 입력받음
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("Select * From jumun");
+							ResultSet results = statement.executeQuery();
+							ArrayList<String[]> list = new ArrayList<String[]>();
+							while(results.next()) {
+								model3.addRow(new Object[] {results.getString("JumunName")});
+							}
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
 					}
 					else if((String)listResult.getValueAt(i, 0) == "참깨빵" && (String)listResult.getValueAt(i+1, 0) == "양상추" && (String)listResult.getValueAt(i+2, 0) == "피클" && (String)listResult.getValueAt(i+3, 0) == "특별한소스" && (String)listResult.getValueAt(i+4, 0) == "베이컨") {
 						text.setBounds(660,410,120,50);
@@ -1117,6 +1317,29 @@ public class ThirdWindow extends JFrame{
 							PreparedStatement statement = con.prepareStatement("Update food set SellCount = SellCount + 1 where SellFood = '베이컨버거'");  // 베이컨버거 완성시 판매량 1증가
 							ResultSet results = statement.executeQuery();
 						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						try {
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("delete from jumun where JumunName = '베이컨버거'");
+							ResultSet results = statement.executeQuery();
+						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						DefaultTableModel m = (DefaultTableModel)listResult.getModel();            // 재료기록칸 목록 초기화
+						m.setRowCount(0);
+						DefaultTableModel s = (DefaultTableModel)list.getModel();                  // 주문내역 목록 초기화
+						s.setRowCount(0);
+						try {                                                                                      // 다시 입력받음
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("Select * From jumun");
+							ResultSet results = statement.executeQuery();
+							ArrayList<String[]> list = new ArrayList<String[]>();
+							while(results.next()) {
+								model3.addRow(new Object[] {results.getString("JumunName")});
+							}
 							}catch(Exception e1) {
 								System.out.println(e1.getMessage());
 						   }
@@ -1140,6 +1363,29 @@ public class ThirdWindow extends JFrame{
 							}catch(Exception e1) {
 								System.out.println(e1.getMessage());
 						   }
+						try {
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("delete from jumun where JumunName = '오징어버거'");
+							ResultSet results = statement.executeQuery();
+						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						DefaultTableModel m = (DefaultTableModel)listResult.getModel();            // 재료기록칸 목록 초기화
+						m.setRowCount(0);
+						DefaultTableModel s = (DefaultTableModel)list.getModel();                  // 주문내역 목록 초기화
+						s.setRowCount(0);
+						try {                                                                                      // 다시 입력받음
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("Select * From jumun");
+							ResultSet results = statement.executeQuery();
+							ArrayList<String[]> list = new ArrayList<String[]>();
+							while(results.next()) {
+								model3.addRow(new Object[] {results.getString("JumunName")});
+							}
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
 					}
 					else if((String)listResult.getValueAt(i, 0) == "참깨빵" && (String)listResult.getValueAt(i+1, 0) == "양상추" && (String)listResult.getValueAt(i+2, 0) == "피클" && (String)listResult.getValueAt(i+3, 0) == "양파" && (String)listResult.getValueAt(i+4, 0) == "불고기패티" && (String)listResult.getValueAt(i+5, 0) == "치킨패티") {
 						text.setBounds(670,410,120,50);
@@ -1157,6 +1403,29 @@ public class ThirdWindow extends JFrame{
 							PreparedStatement statement = con.prepareStatement("Update food set SellCount = SellCount + 1 where SellFood = '더블버거'");  // 더블버거 완성시 판매량 1증가
 							ResultSet results = statement.executeQuery();
 						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						try {
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("delete from jumun where JumunName = '더블버거'");
+							ResultSet results = statement.executeQuery();
+						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						DefaultTableModel m = (DefaultTableModel)listResult.getModel();            // 재료기록칸 목록 초기화
+						m.setRowCount(0);
+						DefaultTableModel s = (DefaultTableModel)list.getModel();                  // 주문내역 목록 초기화
+						s.setRowCount(0);
+						try {                                                                                      // 다시 입력받음
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("Select * From jumun");
+							ResultSet results = statement.executeQuery();
+							ArrayList<String[]> list = new ArrayList<String[]>();
+							while(results.next()) {
+								model3.addRow(new Object[] {results.getString("JumunName")});
+							}
 							}catch(Exception e1) {
 								System.out.println(e1.getMessage());
 						   }
@@ -1180,6 +1449,29 @@ public class ThirdWindow extends JFrame{
 							}catch(Exception e1) {
 								System.out.println(e1.getMessage());
 						   }
+						try {
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("delete from jumun where JumunName = '에그치즈버거'");
+							ResultSet results = statement.executeQuery();
+						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						DefaultTableModel m = (DefaultTableModel)listResult.getModel();            // 재료기록칸 목록 초기화
+						m.setRowCount(0);
+						DefaultTableModel s = (DefaultTableModel)list.getModel();                  // 주문내역 목록 초기화
+						s.setRowCount(0);
+						try {                                                                                      // 다시 입력받음
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("Select * From jumun");
+							ResultSet results = statement.executeQuery();
+							ArrayList<String[]> list = new ArrayList<String[]>();
+							while(results.next()) {
+								model3.addRow(new Object[] {results.getString("JumunName")});
+							}
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
 					}
 					else if((String)listResult.getValueAt(i, 0) == "감자" && (String)listResult.getValueAt(i+1, 0) == "식용유") {
 						text.setBounds(670,410,120,50);
@@ -1197,6 +1489,29 @@ public class ThirdWindow extends JFrame{
 							PreparedStatement statement = con.prepareStatement("Update food set SellCount = SellCount + 1 where SellFood = '감자튀김'");  // 감자튀김 완성시 판매량 1증가
 							ResultSet results = statement.executeQuery();
 						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						try {
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("delete from jumun where JumunName = '감자튀김'");
+							ResultSet results = statement.executeQuery();
+						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						DefaultTableModel m = (DefaultTableModel)listResult.getModel();            // 재료기록칸 목록 초기화
+						m.setRowCount(0);
+						DefaultTableModel s = (DefaultTableModel)list.getModel();                  // 주문내역 목록 초기화
+						s.setRowCount(0);
+						try {                                                                                      // 다시 입력받음
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("Select * From jumun");
+							ResultSet results = statement.executeQuery();
+							ArrayList<String[]> list = new ArrayList<String[]>();
+							while(results.next()) {
+								model3.addRow(new Object[] {results.getString("JumunName")});
+							}
 							}catch(Exception e1) {
 								System.out.println(e1.getMessage());
 						   }
@@ -1220,6 +1535,29 @@ public class ThirdWindow extends JFrame{
 							}catch(Exception e1) {
 								System.out.println(e1.getMessage());
 						   }
+						try {
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("delete from jumun where JumunName = '콜라'");
+							ResultSet results = statement.executeQuery();
+						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						DefaultTableModel m = (DefaultTableModel)listResult.getModel();            // 재료기록칸 목록 초기화
+						m.setRowCount(0);
+						DefaultTableModel s = (DefaultTableModel)list.getModel();                  // 주문내역 목록 초기화
+						s.setRowCount(0);
+						try {                                                                                      // 다시 입력받음
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("Select * From jumun");
+							ResultSet results = statement.executeQuery();
+							ArrayList<String[]> list = new ArrayList<String[]>();
+							while(results.next()) {
+								model3.addRow(new Object[] {results.getString("JumunName")});
+							}
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
 					}
 					else if((String)listResult.getValueAt(i, 0) == "사이다" && (String)listResult.getValueAt(i+1, 0) == "얼음") {
 						text.setBounds(680,410,120,50);
@@ -1237,6 +1575,29 @@ public class ThirdWindow extends JFrame{
 							PreparedStatement statement = con.prepareStatement("Update food set SellCount = SellCount + 1 where SellFood = '사이다'");  // 사이다 완성시 판매량 1증가
 							ResultSet results = statement.executeQuery();
 						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						try {
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("delete from jumun where JumunName = '사이다'");
+							ResultSet results = statement.executeQuery();
+						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						DefaultTableModel m = (DefaultTableModel)listResult.getModel();            // 재료기록칸 목록 초기화
+						m.setRowCount(0);
+						DefaultTableModel s = (DefaultTableModel)list.getModel();                  // 주문내역 목록 초기화
+						s.setRowCount(0);
+						try {                                                                                      // 다시 입력받음
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("Select * From jumun");
+							ResultSet results = statement.executeQuery();
+							ArrayList<String[]> list = new ArrayList<String[]>();
+							while(results.next()) {
+								model3.addRow(new Object[] {results.getString("JumunName")});
+							}
 							}catch(Exception e1) {
 								System.out.println(e1.getMessage());
 						   }
@@ -1260,10 +1621,33 @@ public class ThirdWindow extends JFrame{
 							}catch(Exception e1) {
 								System.out.println(e1.getMessage());
 						   }
+						try {
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("delete from jumun where JumunName = '아이스크림'");
+							ResultSet results = statement.executeQuery();
+						
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						DefaultTableModel m = (DefaultTableModel)listResult.getModel();            // 재료기록칸 목록 초기화
+						m.setRowCount(0);
+						DefaultTableModel s = (DefaultTableModel)list.getModel();                  // 주문내역 목록 초기화
+						s.setRowCount(0);
+						try {                                                                                      // 다시 입력받음
+							Connection con = getIngre();
+							PreparedStatement statement = con.prepareStatement("Select * From jumun");
+							ResultSet results = statement.executeQuery();
+							ArrayList<String[]> list = new ArrayList<String[]>();
+							while(results.next()) {
+								model3.addRow(new Object[] {results.getString("JumunName")});
+							}
+							}catch(Exception e1) {
+								System.out.println(e1.getMessage());
+						   }
+						
 					}
+					
 				}
-				text.setBounds(660,410,120,50);
-				text.setText(String.valueOf("잘못만들었어요."));
 			}
 		});
 		

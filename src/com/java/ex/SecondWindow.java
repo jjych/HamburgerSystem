@@ -7,8 +7,32 @@ import com.java.ex.Event.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class SecondWindow extends JFrame{
+	Connection con = null;
+	Statement stmt = null;
+	ResultSet rs = null;
+	
+	public static Connection getIngre() {                // 재료 DB연동
+		try {
+			String driver = "org.mariadb.jdbc.Driver";
+			String url = "jdbc:mariadb://Localhost:3307/gimal2020";
+			String uid = "root";
+			String upw = "1234";
+			Class.forName(driver);
+			Connection con = DriverManager.getConnection(url,uid,upw);
+			return con;
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+		
+	}
 	public SecondWindow() {
 		setTitle("메뉴판");
 		setSize(500,500);
@@ -46,6 +70,14 @@ public class SecondWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)table.getModel();
 				m.addRow(new Object[]{"불고기버거",price[0]});
+				try {
+					Connection con = getIngre();
+					PreparedStatement statement = con.prepareStatement("insert into jumun values ('불고기버거')");  // 불고기버거 DB 저장
+					ResultSet results = statement.executeQuery();
+				
+					}catch(Exception e1) {
+						System.out.println(e1.getMessage());
+				   }
 			}
 		});
 		
@@ -61,6 +93,14 @@ public class SecondWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)table.getModel();
 				m.addRow(new Object[]{"치즈버거",price[1]});
+				try {
+					Connection con = getIngre();
+					PreparedStatement statement = con.prepareStatement("insert into jumun values ('치즈버거')");  // 치즈버거 DB 저장
+					ResultSet results = statement.executeQuery();
+				
+					}catch(Exception e1) {
+						System.out.println(e1.getMessage());
+				   }
 			}
 		});
 		
@@ -76,6 +116,14 @@ public class SecondWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)table.getModel();
 				m.addRow(new Object[]{"빅맥",price[2]});
+				try {
+					Connection con = getIngre();
+					PreparedStatement statement = con.prepareStatement("insert into jumun values ('빅맥')");  // 빅맥 DB 저장
+					ResultSet results = statement.executeQuery();
+				
+					}catch(Exception e1) {
+						System.out.println(e1.getMessage());
+				   }
 			}
 		});
 		
@@ -91,6 +139,14 @@ public class SecondWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)table.getModel();
 				m.addRow(new Object[]{"크리스피버거",price[3]});
+				try {
+					Connection con = getIngre();
+					PreparedStatement statement = con.prepareStatement("insert into jumun values ('크리스피버거')");  // 크리스피버거 DB 저장
+					ResultSet results = statement.executeQuery();
+				
+					}catch(Exception e1) {
+						System.out.println(e1.getMessage());
+				   }
 			}
 		});
 		
@@ -106,6 +162,14 @@ public class SecondWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)table.getModel();
 				m.addRow(new Object[]{"베이컨버거",price[4]});
+				try {
+					Connection con = getIngre();
+					PreparedStatement statement = con.prepareStatement("insert into jumun values ('베이컨버거')");  // 베이컨버거 DB 저장
+					ResultSet results = statement.executeQuery();
+				
+					}catch(Exception e1) {
+						System.out.println(e1.getMessage());
+				   }
 			}
 		});
 		
@@ -121,6 +185,14 @@ public class SecondWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)table.getModel();
 				m.addRow(new Object[]{"오징어버거",price[5]});
+				try {
+					Connection con = getIngre();
+					PreparedStatement statement = con.prepareStatement("insert into jumun values ('오징어버거')");  // 오징어버거 DB 저장
+					ResultSet results = statement.executeQuery();
+				
+					}catch(Exception e1) {
+						System.out.println(e1.getMessage());
+				   }
 			}
 		});
 		
@@ -136,6 +208,14 @@ public class SecondWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)table.getModel();
 				m.addRow(new Object[]{"더블버거",price[6]});
+				try {
+					Connection con = getIngre();
+					PreparedStatement statement = con.prepareStatement("insert into jumun values ('더블버거')");  // 더블버거 DB 저장
+					ResultSet results = statement.executeQuery();
+				
+					}catch(Exception e1) {
+						System.out.println(e1.getMessage());
+				   }
 			}
 		});
 		
@@ -151,6 +231,14 @@ public class SecondWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)table.getModel();
 				m.addRow(new Object[]{"에그치즈버거",price[7]});
+				try {
+					Connection con = getIngre();
+					PreparedStatement statement = con.prepareStatement("insert into jumun values ('에그치즈버거')");  // 에그치즈버거 DB 저장
+					ResultSet results = statement.executeQuery();
+				
+					}catch(Exception e1) {
+						System.out.println(e1.getMessage());
+				   }
 			}
 		});
 		
@@ -166,6 +254,14 @@ public class SecondWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)table.getModel();
 				m.addRow(new Object[]{"감자튀김",price[8]});
+				try {
+					Connection con = getIngre();
+					PreparedStatement statement = con.prepareStatement("insert into jumun values ('감자튀김')");  // 감자튀김 DB 저장
+					ResultSet results = statement.executeQuery();
+				
+					}catch(Exception e1) {
+						System.out.println(e1.getMessage());
+				   }
 			}
 		});
 		
@@ -181,6 +277,14 @@ public class SecondWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)table.getModel();
 				m.addRow(new Object[]{"콜라",price[9]});
+				try {
+					Connection con = getIngre();
+					PreparedStatement statement = con.prepareStatement("insert into jumun values ('콜라')");  // 콜라 DB 저장
+					ResultSet results = statement.executeQuery();
+				
+					}catch(Exception e1) {
+						System.out.println(e1.getMessage());
+				   }
 			}
 		});
 		
@@ -196,6 +300,14 @@ public class SecondWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)table.getModel();
 				m.addRow(new Object[]{"사이다",price[10]});
+				try {
+					Connection con = getIngre();
+					PreparedStatement statement = con.prepareStatement("insert into jumun values ('사이다')");  // 사이다 DB 저장
+					ResultSet results = statement.executeQuery();
+				
+					}catch(Exception e1) {
+						System.out.println(e1.getMessage());
+				   }
 			}
 		});
 		
@@ -211,6 +323,14 @@ public class SecondWindow extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)table.getModel();
 				m.addRow(new Object[]{"아이스크림",price[11]});
+				try {
+					Connection con = getIngre();
+					PreparedStatement statement = con.prepareStatement("insert into jumun values ('아이스크림')");  // 아이스크림 DB 저장
+					ResultSet results = statement.executeQuery();
+				
+					}catch(Exception e1) {
+						System.out.println(e1.getMessage());
+				   }
 			}
 		});
 		
@@ -226,7 +346,16 @@ public class SecondWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)table.getModel();
-				m.removeRow(table.getSelectedRow());
+//				m.removeRow(table.getSelectedRow());
+				m.setRowCount(0);
+				try {
+					Connection con = getIngre();
+					PreparedStatement statement = con.prepareStatement("delete from jumun");
+					ResultSet results = statement.executeQuery();
+				
+					}catch(Exception e1) {
+						System.out.println(e1.getMessage());
+				   }
 			}
 		});
 		
