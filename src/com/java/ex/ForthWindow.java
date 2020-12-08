@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import com.java.ex.DB.*;
 import com.java.ex.*;
 import com.java.ex.Event.*;
 import com.java.ex.main.MainClass;

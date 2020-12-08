@@ -5,8 +5,7 @@ import java.awt.event.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Vector;
-
-import com.java.ex.DB.*;
+import com.java.ex.Event.Jubang;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -782,6 +781,18 @@ public class FifthWindow extends JFrame{
 					}catch(Exception e) {
 						System.out.println(e.getMessage());
 				   }
+			}
+		});
+		
+		JButton jubang = new JButton("주방가기");                 // 주방으로 이동
+		jubang.setBounds(320,420,100,40);
+		jp1.add(jubang);
+		
+		jubang.addActionListener(new Jubang() {
+			public void actionPerformed(ActionEvent e) {
+				ThirdWindow W3 = new ThirdWindow();
+				W3.setVisible(true);
+				dispose();
 			}
 		});
 		

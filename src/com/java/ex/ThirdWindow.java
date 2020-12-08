@@ -1,7 +1,6 @@
 package com.java.ex;
 
 import com.java.ex.*;
-import com.java.ex.DB.*;
 import com.java.ex.Event.*;
 import com.java.ex.main.MainClass;
 
@@ -24,8 +23,6 @@ public class ThirdWindow extends JFrame{
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	ResultSetMetaData rsmd = null; // resultset 에 대한 컬럼의 속성이나 타입 정보를 사용한다.
-//	Ingredient2 stock =null;
-//	Ingredient I = null;
 	
 	public static Connection getIngre() {                // 재료 DB연동
 		try {
@@ -78,36 +75,8 @@ public class ThirdWindow extends JFrame{
 		}
 	}
 	
-//	public int checkOrder(){
-//		int result=0;
-//		if(	stock.getBread() == -1 || 
-//			stock.getBulgogi() == -1 || 
-//			stock.getYangsangchu() == -1 ||
-//			stock.getPicle() == -1 ||
-//			stock.getSoce() == -1 ||
-//			stock.getGamja() == -1 ||
-//			stock.getYangpa() == -1 ||
-//			stock.getChiken() == -1 ||
-//			stock.getOjing() == -1 ||
-//		    stock.getEgg() == -1 ||
-//		    stock.getBaken() == -1 ||
-//		    stock.getSicyounyu() == -1 ||
-//		    stock.getCheeze() == -1 ||
-//		    stock.getMilk() == -1 ||
-//		    stock.getSider() == -1 ||
-//		    stock.getCola() == -1 ||
-//		    stock.getIce() == -1 
-//		){
-//			result=-1;	
-//		}	
-//			return result;
-//	}//checkOrder
-	
 	public ThirdWindow() {
 		con2();
-//		I = new Ingredient();
-//		stock = new Ingredient2();
-//		stock = I.getstock();	//서버에서 재고 데이터 넣어주기
 		Container ct = getContentPane();
 		setTitle("주방");
 		setSize(800,600);
@@ -116,7 +85,7 @@ public class ThirdWindow extends JFrame{
 				"참깨빵","불고기패티","양상추","피클",
 				"특별한소스","감자","양파","치킨패티",
 				"오징어패티","달걀","베이컨","식용유",
-				"치즈","우유","사이다","콜라","얼음"};
+				"치즈","우유","사이다","콜라","얼음","null"};
 		
 		JLabel jl1 = new JLabel("주방");
 		jl1.setHorizontalAlignment(JLabel.CENTER);
@@ -194,7 +163,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[0]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '참깨빵'");
@@ -209,8 +177,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb1.setText(rs.getString(3));
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '참깨빵'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb1.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[0]});
 						}
 					}
 				
@@ -249,7 +230,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[1]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '불고기패티'");
@@ -264,8 +244,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb2.setText(rs.getString(3));
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '불고기패티'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb2.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[1]});
 						}
 					}
 				
@@ -304,7 +297,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[2]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '양상추'");
@@ -319,8 +311,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb3.setText(rs.getString(3));
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '양상추'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb3.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[2]});
 						}
 					}
 				
@@ -359,7 +364,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[3]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '피클'");
@@ -374,8 +378,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb4.setText(rs.getString(3));
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '피클'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb4.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[3]});
 						}
 					}
 				
@@ -414,7 +431,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[4]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '특별한소스'");
@@ -429,8 +445,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb5.setText(rs.getString(3));
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '특별한소스'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb5.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[4]});
 						}
 					}
 				
@@ -469,7 +498,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[5]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '감자'");
@@ -484,8 +512,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb6.setText(rs.getString(3));	
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '감자'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb6.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[5]});
 						}
 					}
 				
@@ -524,7 +565,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[6]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '양파'");
@@ -539,8 +579,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb7.setText(rs.getString(3));	
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '양파'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb7.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[6]});
 						}
 					}
 				
@@ -579,7 +632,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[7]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '치킨패티'");
@@ -594,8 +646,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb8.setText(rs.getString(3));
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '치킨패티'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb8.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[7]});
 						}
 					}
 				
@@ -634,7 +699,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[8]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '오징어패티'");
@@ -649,8 +713,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb9.setText(rs.getString(3));	
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '오징어패티'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb9.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[8]});
 						}
 					}
 				
@@ -689,7 +766,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[9]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '달걀'");
@@ -704,8 +780,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb10.setText(rs.getString(3));
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '달걀'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb10.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[9]});
 						}
 					}
 				
@@ -744,7 +833,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[10]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '베이컨'");
@@ -759,8 +847,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb11.setText(rs.getString(3));	
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '베이컨'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb11.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[10]});
 						}
 					}
 				
@@ -799,7 +900,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[11]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '식용유'");
@@ -814,8 +914,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb12.setText(rs.getString(3));
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '식용유'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb12.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[11]});
 						}
 					}
 				
@@ -854,7 +967,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[12]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '치즈'");
@@ -869,8 +981,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb13.setText(rs.getString(3));
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '치즈'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb13.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[12]});
 						}
 					}
 				
@@ -909,7 +1034,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[13]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '우유'");
@@ -924,8 +1048,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb14.setText(rs.getString(3));
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '우유'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb14.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[13]});
 						}
 					}
 				
@@ -964,7 +1101,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[14]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '사이다'");
@@ -979,8 +1115,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb15.setText(rs.getString(3));
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '사이다'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb15.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[14]});
 						}
 					}
 				
@@ -1019,7 +1168,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[15]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '콜라'");
@@ -1034,8 +1182,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb16.setText(rs.getString(3));	
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '콜라'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb16.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[15]});
 						}
 					}
 				
@@ -1074,7 +1235,6 @@ public class ThirdWindow extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel m = (DefaultTableModel)listResult.getModel();
-				m.addRow(new Object[]{menu[16]});
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count - 1 where IngredientName = '얼음'");
@@ -1089,8 +1249,21 @@ public class ThirdWindow extends JFrame{
 			
 					while (rs.next()) {
 						lb17.setText(rs.getString(3));	
-						if(rs.getInt(3) <= 0 ) {
+						if(rs.getInt(3) < 0 ) {
+							m.addRow(new Object[] {menu[17]});
+							try {
+								Connection con = getIngre();
+								PreparedStatement statement = con.prepareStatement("Update ingredient set Count = Count + 1 where IngredientName = '얼음'");
+								ResultSet results = statement.executeQuery();
+								
+								}catch(Exception e1) {
+									System.out.println(e1.getMessage());
+							   }
+							lb17.setText("0");
 							JOptionPane.showMessageDialog(null, "재료가 떨어졌습니다.");
+						}
+						else {
+							m.addRow(new Object[]{menu[16]});
 						}
 					}
 				
@@ -1648,6 +1821,18 @@ public class ThirdWindow extends JFrame{
 					}
 					
 				}
+			}
+		});
+		
+		JButton sic = new JButton("식재료창고");
+		sic.setBounds(250,480,120,50);
+		jp1.add(sic);
+		
+		sic.addActionListener(new Store() {                       // 식재료창고 가기 버튼
+			public void actionPerformed(ActionEvent e) {
+				FifthWindow W5 = new FifthWindow();
+				W5.setVisible(true);
+				dispose();
 			}
 		});
 		

@@ -338,6 +338,11 @@ public class SecondWindow extends JFrame{
 		jumun.setBounds(60,240,100,50);
 		jp1.add(jumun);
 		
+		JLabel gmack = new JLabel("가격  : 0원");            // 결제금액 라벨
+		gmack.setBounds(320,310,150,50);
+		gmack.setFont(new Font("가격", Font.BOLD, 20));
+		jp1.add(gmack);
+		
 		JButton jumuncancel = new JButton("주문취소");      // 주문취소 버튼
 		jumuncancel.setBounds(320,240,150,50);
 		jp1.add(jumuncancel);
@@ -348,6 +353,8 @@ public class SecondWindow extends JFrame{
 				DefaultTableModel m = (DefaultTableModel)table.getModel();
 //				m.removeRow(table.getSelectedRow());
 				m.setRowCount(0);
+				gmack.setText("가격  : 0원");
+				gmack.setFont(new Font("가격", Font.BOLD, 20));
 				try {
 					Connection con = getIngre();
 					PreparedStatement statement = con.prepareStatement("delete from jumun");
@@ -365,18 +372,15 @@ public class SecondWindow extends JFrame{
 		
 		jumunsucess.addActionListener(new Jubang() {             // 주방으로 이동
 		public void actionPerformed(ActionEvent e) {
+			JOptionPane.showMessageDialog(null, "주문하신 음식이 준비중입니다!");
 			ThirdWindow W3 = new ThirdWindow();
 	         W3.setVisible(true);
 	         dispose();
 			}
 		});
 		
-		JLabel gmack = new JLabel("가격  : 0원");            // 결제금액 추가
-		gmack.setBounds(320,310,150,50);
-		gmack.setFont(new Font("가격", Font.BOLD, 20));
-		jp1.add(gmack);
 		
-		JButton gelje = new JButton("결제하기");
+		JButton gelje = new JButton("결제하기");                  // 결제하기 버튼
 		gelje.setBounds(180,380,120,50);
 		jp1.add(gelje);
 		
